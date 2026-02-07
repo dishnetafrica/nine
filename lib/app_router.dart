@@ -20,7 +20,7 @@ final appRouter = GoRouter(
       builder: (context, state) => const LoginPage(),
     ),
     ShellRoute(
-      builder: (context, state, child) => AppShell(child: child),
+      builder: (context, state, child) => AppShell(child: child, currentLocation: state.uri.path),
       routes: [
         GoRoute(
           path: '/dashboard',

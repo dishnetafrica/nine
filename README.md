@@ -1,27 +1,68 @@
 # Nine ISP Suite (Flutter)
 
-Offline-first operations app for Starlink resellers and ISPs in African markets.
+Production-oriented Flutter app foundation for Starlink resellers and ISPs operating in low-connectivity regions.
 
-## Implemented foundation
+## What is implemented
 
-- Clean architecture folder layout aligned to requested modules.
-- Riverpod dependency injection and service wiring.
-- GoRouter navigation with feature shells.
-- API client with retry/backoff for unstable networks.
-- Offline queue service using Hive local storage.
-- Connectivity-aware sync workflow hooks.
+- Clean architecture structure split into `core`, `features`, and `shared` modules.
+- Riverpod dependency injection + GoRouter shell navigation.
+- Offline-first persistence with Hive for vouchers, customers, and offline queue.
+- Retry-enabled Dio API client for unreliable links.
+- Secure credential persistence using `flutter_secure_storage`.
+- Feature scaffolds for:
+  - Starlink local telemetry mode and controls entry points.
+  - MikroTik and UISP integration pages.
+  - Voucher generation (1-1000), local history, and QR payload data.
+  - Customer local DB records with sync-ready repository pattern.
 
-## Getting started
+## Quick start (Android Studio / VS Code)
+
+1. Install Flutter stable (3.22+), Android SDK, and Xcode (for iOS).
+2. Clone this repo.
+3. Run:
 
 ```bash
 flutter pub get
 flutter run
 ```
 
-## Next implementation priorities
+4. For Android Studio:
+   - Open this folder as a Flutter project.
+   - Select an Android emulator/device (or iOS simulator on macOS).
+   - Click **Run**.
 
-1. Replace placeholder Starlink client with real gRPC-web/proxy layer.
-2. Implement secure credential vault and setup wizard.
-3. Build domain entities/repositories per feature with DTO mapping.
-4. Add PDF voucher generation/thermal printer support.
-5. Add background sync worker and conflict resolution strategies.
+## Project architecture
+
+```text
+lib/
+├── main.dart
+├── app_router.dart
+├── core/
+│   ├── constants/
+│   ├── di/
+│   ├── errors/
+│   ├── network/
+│   ├── services/
+│   ├── storage/
+│   └── theme/
+├── features/
+│   ├── auth/
+│   ├── customers/
+│   ├── dashboard/
+│   ├── hotspot/
+│   ├── mikrotik/
+│   ├── settings/
+│   ├── starlink/
+│   ├── uisp/
+│   └── voucher/
+└── shared/
+    └── widgets/
+```
+
+## Production hardening checklist (next)
+
+- Wire real Starlink gRPC bridge/proxy for dish commands.
+- Add full MikroTik CRUD repositories (firewall, queues, PPPoE, DHCP static leases).
+- Add UISP pull/push sync jobs with conflict handling.
+- Add PDF voucher rendering/printing and hotspot user push automation.
+- Add unit/widget/integration test suites and CI pipelines.

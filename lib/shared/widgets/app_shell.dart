@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class AppShell extends StatelessWidget {
-  const AppShell({required this.child, super.key});
+  const AppShell({
+    required this.child,
+    required this.currentLocation,
+    super.key,
+  });
 
   final Widget child;
+  final String currentLocation;
 
   static const _items = <({String label, String route, IconData icon})>[
     (label: 'Dashboard', route: '/dashboard', icon: Icons.dashboard_outlined),
@@ -19,8 +24,6 @@ class AppShell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final location = GoRouterState.of(context).uri.toString();
-
     return Scaffold(
       appBar: AppBar(title: const Text('Nine ISP Suite')),
       drawer: Drawer(
@@ -31,7 +34,7 @@ class AppShell extends StatelessWidget {
               (item) => ListTile(
                 leading: Icon(item.icon),
                 title: Text(item.label),
-                selected: location == item.route,
+                selected: currentLocation == item.route,
                 onTap: () {
                   Navigator.pop(context);
                   context.go(item.route);

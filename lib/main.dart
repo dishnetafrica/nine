@@ -10,6 +10,12 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
 
+  await Future.wait([
+    Hive.openBox<Map>(AppConstants.offlineQueueBox),
+    Hive.openBox<Map>(AppConstants.customersBox),
+    Hive.openBox<Map>(AppConstants.vouchersBox),
+  ]);
+
   runApp(const ProviderScope(child: NineApp()));
 }
 
@@ -20,6 +26,7 @@ class NineApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: AppConstants.appName,
+      debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
       routerConfig: appRouter,
